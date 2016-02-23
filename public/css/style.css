@@ -1,0 +1,44 @@
+.analitics_stat{
+    padding: 0 20px;
+} s
+.analitics_stat .xchart{
+    width: 100% !important;
+    height: 200px !important;
+}
+.analitics_stat #placeholder{
+    width: 100%;
+}
+.analitics_stat #chart{
+    width: 100%;
+    height: 200px;
+}
+
+.analitics_stat .statistic td{
+    border-right: 1px solid #ccc;
+    vertical-align: top;
+    height: 60px;
+    padding: 5px 10px;
+    width: 150px;
+    max-width: 150px;
+}
+.analitics_stat .statistic td strong{
+    font-size: 22px;
+}
+.analitics_stat .statistic_browsers td{
+    border: 1px solid #ccc;
+    vertical-align: center;
+    padding: 10px 10px;
+}
+.analitics_stat .statistic_browsers thead td{
+    background: #eee;
+}
+.param_statistic{
+    padding: 5px 0 10px 0;
+}
+.param_statistic a{
+    margin: 0 5px;
+}
+.param_statistic a.active{
+    font-weight: bold;
+    color: #000;
+}
