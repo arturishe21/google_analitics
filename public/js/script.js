@@ -81,7 +81,7 @@ $(function() {
         "mouseover": function (d, i) {
             var pos = $(this).offset();
 
-            tt.html( "<strong> " + localizationDay(d.x.getDay()-1) + " " + d.x.getDate() + " " + localizationMonth(d.x.getMonth()) + " " + d.x.getFullYear() + " г. </strong>" + ' <br>Сеансы:  <strong>' + d.y +'</strong>').css({
+            tt.html( "<strong> " + localizationDay(d.x.getDay()) + " " + d.x.getDate() + " " + localizationMonth(d.x.getMonth()) + " " + d.x.getFullYear() + " г. </strong>" + ' <br>Сеансы:  <strong>' + d.y +'</strong>').css({
 
                 top: topOffset + pos.top,
                 left: pos.left
@@ -96,6 +96,7 @@ $(function() {
 
     function localizationMonth(param) {
 
+
         var month = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля",	"августа", "сентября", "октября", "ноября", "декабря"];
 
         return month[param];
@@ -103,7 +104,7 @@ $(function() {
 
     function localizationDay(param) {
 
-        var days = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"];
+        var days = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
 
         return days[param];
     }
