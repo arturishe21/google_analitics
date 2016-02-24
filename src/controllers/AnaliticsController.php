@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\View;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Session;
 use Thujohn\Analytics\AnalyticsFacade as Analytics;
 use Spatie\AnalyticsReports\AnalyticsReportsFacade as AnalyticsReports;
 
@@ -24,6 +25,64 @@ class AnaliticsController extends Controller
 
         return View::make($view, compact("title"));
     }  // end getVisitors
+
+    public function getSettings()
+    {
+
+        $this->doSaveSsttings();
+
+        $title =  "Настройки";
+        $view = "analitics::pages.settings";
+        if (Request::ajax()) {
+            $view = "analitics::partials.settings";
+        }
+
+        $siteId = Config::get("analyticsReports.siteId");
+        $clientId = Config::get("analytics::client_id");
+        $serviceEmail = Config::get("analytics::service_email");
+        $certificatePath = Config::get("analytics::certificate_path");
+
+        return View::make($view, compact("title", "siteId", "clientId", "serviceEmail", "certificatePath"));
+    }
+
+    private function doSaveSsttings()
+    {
+        $data = Input::all();
+
+        if (count($data)) {
+            $fileAnalyticsReports = app_path()."/config/analyticsReports.php";
+            $fileAnalyticsConfig = app_path()."/config/packages/thujohn/analytics/config.php";
+            $analyticsReports = array(
+                "siteId" => $data['site_id'],
+                "cacheLifetime" => "0"
+            );
+
+            $analyticsConfig = array(
+                "use_objects" => true,
+                "client_id" => $data['client_id'],
+                "service_email" => $data['service_email'],
+            );
+
+            $certificate = Input::file('certificate');
+            if ($certificate) {
+                $destinationPath = app_path()."/config/packages/thujohn/analytics";
+
+                $certificate -> move($destinationPath,  $certificate->getClientOriginalName());
+                $analyticsConfig["certificate_path"] = '__dir__/'.$certificate->getClientOriginalName();
+            } else {
+                $analyticsConfig["certificate_path"] = '__dir__/'.basename(Config::get("analytics::certificate_path"));
+            }
+
+            $fileConfigAnalitics = "<?php \n\n return ".var_export($analyticsConfig, true)."; ";
+            $fileConfigAnalitics = str_replace("'__dir__", "__DIR__ . '", $fileConfigAnalitics);
+
+            file_put_contents($fileAnalyticsReports, "<?php \n\n return ".var_export($analyticsReports, true)."; ");
+
+            file_put_contents($fileAnalyticsConfig, $fileConfigAnalitics);
+
+            Session::flash('text_success', 'Настройки сохранены');
+        }
+     }
 
     public function getBrowsers()
     {
