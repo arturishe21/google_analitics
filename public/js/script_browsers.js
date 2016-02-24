@@ -81,7 +81,7 @@ $(function() {
         "mouseover": function (d, i) {
             var pos = $(this).offset();
 
-            tt.html(d.x.format('{Month} {ord}') + ':' + d.y).css({
+            tt.html( "<strong> " + localizationDay(d.x.getDay()-1) + " " + d.x.getDate() + " " + localizationMonth(d.x.getMonth()) + " " + d.x.getFullYear() + " г. </strong>" + ' <br>Сеансы:  <strong>' + d.y +'</strong>').css({
 
                 top: topOffset + pos.top,
                 left: pos.left
@@ -93,6 +93,19 @@ $(function() {
             tt.hide();
         }
     };
+    function localizationMonth(param) {
+
+        var month = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля",	"августа", "сентября", "октября", "ноября", "декабря"];
+
+        return month[param];
+    }
+
+    function localizationDay(param) {
+
+        var days = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"];
+
+        return days[param];
+    }
 
     // Create a new xChart instance, passing the type
     // of chart a data set and the options object
@@ -121,13 +134,14 @@ $(function() {
         $.post("/admin/analitics/load_statistic_browsers", {
                 start:	startDate.format('{yyyy}-{MM}-{dd}'),
                 end:	endDate.format('{yyyy}-{MM}-{dd}'),
-                type: $(".param_statistic a.active").attr("type")
+                type: $(".param_statistic a.active").attr("type"),
+                nameType : $(".param_statistic a.active").text(),
             },
-               function(data){
+            function(data){
 
-                   $(".table_browsers").html(data);
+                $(".table_browsers").html(data);
 
-         });
+            });
 
         $.getJSON('/admin/analitics/load_statistic', {
 
@@ -167,7 +181,8 @@ $(function() {
         $.post("/admin/analitics/load_statistic_browsers", {
                 start:	startDate.format('{yyyy}-{MM}-{dd}'),
                 end:	endDate.format('{yyyy}-{MM}-{dd}'),
-                type: thisElement.attr("type")
+                type: thisElement.attr("type"),
+                nameType : thisElement.text(),
             },
             function(data){
 

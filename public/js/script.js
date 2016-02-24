@@ -81,7 +81,7 @@ $(function() {
         "mouseover": function (d, i) {
             var pos = $(this).offset();
 
-            tt.html(d.x.format('{Month} {ord}') + ':' + d.y).css({
+            tt.html( "<strong> " + localizationDay(d.x.getDay()-1) + " " + d.x.getDate() + " " + localizationMonth(d.x.getMonth()) + " " + d.x.getFullYear() + " г. </strong>" + ' <br>Сеансы:  <strong>' + d.y +'</strong>').css({
 
                 top: topOffset + pos.top,
                 left: pos.left
@@ -93,6 +93,20 @@ $(function() {
             tt.hide();
         }
     };
+
+    function localizationMonth(param) {
+
+        var month = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля",	"августа", "сентября", "октября", "ноября", "декабря"];
+
+        return month[param];
+    }
+
+    function localizationDay(param) {
+
+        var days = ["понедельник", "вторник", "среда", "четверг", "пятница", "суббота", "воскресенье"];
+
+        return days[param];
+    }
 
     // Create a new xChart instance, passing the type
     // of chart a data set and the options object
@@ -147,6 +161,9 @@ $(function() {
 
             var percentNewSessions = parseInt(data['totalsForAllResults']['ga:percentNewSessions']);
             $(".analitics_stat .new_seans").text(percentNewSessions.toFixed(2));
+
+            var avgSessionDuration = parseInt(data['totalsForAllResults']['ga:avgSessionDuration']/60);
+            $(".analitics_stat .avg_duration").text(avgSessionDuration.toFixed(2));
 
 
 

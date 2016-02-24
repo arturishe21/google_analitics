@@ -54,7 +54,7 @@ class AnaliticsController extends Controller
         $end = new \DateTime(Input::get("end"));
 
         $results = AnalyticsReports::performQuery($start, $end,
-            'ga:visits,ga:pageviews,ga:newUsers,ga:bounceRate, ga:percentNewSessions, ga:avgTimeOnPage',
+            'ga:visits,ga:pageviews,ga:newUsers,ga:bounceRate, ga:percentNewSessions, ga:avgTimeOnPage, ga:avgSessionDuration',
             ['dimensions' => 'ga:date']
         );
 
@@ -79,18 +79,7 @@ class AnaliticsController extends Controller
             'ga:sessions, ga:percentNewSessions, ga:newUsers, ga:bounceRate, ga:pageviewsPerSession, ga:avgSessionDuration',
             ['dimensions' => $dimensions]
         );
-
-        if ($dimensions == "ga:browser") {
-            $dimensionsName = "Браузер";
-        } elseif ($dimensions == "ga:operatingSystem") {
-            $dimensionsName = "Операционная система";
-        } elseif ($dimensions == "ga:deviceCategory") {
-            $dimensionsName = "Тип устройства";
-        } else {
-            $dimensionsName = "Разрешение экрана";
-        }
-
-
+        $dimensionsName = Input::get("nameType");
 
         $htmlTable = View::make('analitics::partials.browsers_table', compact("resultsBrowsers", "dimensionsName"));
 
