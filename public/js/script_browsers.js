@@ -1,5 +1,11 @@
 $(function() {
 
+    $("#chart").width($('.analitics_stat').width()-40).height(200);
+
+    $(window).resize(function(){
+        $("#chart").width($('.analitics_stat').width()-40).height(200);
+    });
+
     // Set the default dates
     var startDate	= Date.create().addDays(-29),	// 30 days ago
         endDate		= Date.create(); 				// today
@@ -83,7 +89,7 @@ $(function() {
 
             tt.html( "<strong> " + localizationDay(d.x.getDay()) + " " + d.x.getDate() + " " + localizationMonth(d.x.getMonth()) + " " + d.x.getFullYear() + " г. </strong>" + ' <br>Сеансы:  <strong>' + d.y +'</strong>').css({
 
-                top: topOffset + pos.top,
+                top: topOffset + pos.top - 20,
                 left: pos.left
 
             }).show();
@@ -112,8 +118,9 @@ $(function() {
 
     var chart = new xChart('line-dotted', data, '#chart' , opts);
 
+
     // Function for loading data via AJAX and showing it on the chart
-    function ajaxLoadChart(startDate,endDate) {
+    function ajaxLoadChart(startDate, endDate) {
 
         // If no data is passed (the chart was cleared)
 
@@ -150,7 +157,7 @@ $(function() {
             type : $("[name=statistic] [name=type]").val(),
         }, function(data) {
 
-            var set = [];
+            set = [];
             $.each(data.grafic, function() {
                 set.push({
                     x : this.label,
@@ -171,6 +178,7 @@ $(function() {
             $(".load_page").hide();
         });
     }
+
 
     $(".param_statistic a").click(function(){
         $(".param_statistic a").removeClass("active");

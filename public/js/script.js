@@ -1,5 +1,10 @@
 $(function() {
 
+    $("#chart").width($('.analitics_stat').width()-40).height(200);
+
+    $(window).resize(function(){
+        $("#chart").width($('.analitics_stat').width()-40).height(200);
+    });
     // Set the default dates
     var startDate	= Date.create().addDays(-29),	// 30 days ago
         endDate		= Date.create(); 				// today
@@ -83,7 +88,7 @@ $(function() {
 
             tt.html( "<strong> " + localizationDay(d.x.getDay()) + " " + d.x.getDate() + " " + localizationMonth(d.x.getMonth()) + " " + d.x.getFullYear() + " г. </strong>" + ' <br>Сеансы:  <strong>' + d.y +'</strong>').css({
 
-                top: topOffset + pos.top,
+                top: topOffset + pos.top-20,
                 left: pos.left
 
             }).show();

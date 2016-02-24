@@ -2,6 +2,7 @@
    $(".breadcrumb").html("<li><a href='/admin'>{{__cms('Главная')}}</a></li> <li>{{__cms($title)}}</li>");
    $("title").text("{{__cms($title)}} - {{{ __cms(Config::get('builder::admin.caption')) }}}");
  </script>
+<link href="/packages/vis/analitics/css/style.css" rel="stylesheet">
 
  <div class="analitics_stat">
      <div class="row">
@@ -27,7 +28,7 @@
           </fieldset>
     </form>
     <div id="placeholder">
-        <figure id="chart" ></figure>
+        <figure id="chart" style="width: 100%; height: 200px"></figure>
     </div>
     <div class="param_statistic">Параметр:
         <a class="active" type="ga:browser">Браузер</a>
@@ -39,6 +40,6 @@
 
     </div>
 </div>
-<link href="/packages/vis/analitics/css/style.css" rel="stylesheet">
+
 
 <script src="/packages/vis/analitics/js/script_browsers.js"></script>
